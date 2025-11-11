@@ -20,7 +20,7 @@ const customEnglishMessages: TranslationMessages = {
       month_history: "30 Day Dip History",
       day_history: "24 Hour Dip History",
       welcome: {
-        title: "RouteUI Admin",
+        title: "Telecom-UI Admin",
       },
       monthly_dips: "Monthly Dips",
       daily_dips: "Daily Dips",
