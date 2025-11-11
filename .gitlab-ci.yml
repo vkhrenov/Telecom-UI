@@ -12,7 +12,7 @@ build-job-dev:
     - if: '$CI_COMMIT_BRANCH == "dev"'
   script:
     - echo "VITE_ROUTEAPI_URL=$ROUTEAPI_URL_DEV" >> .env
-    - echo "VITE_APP_VERSION=${CI_COMMIT_SHORT_SHA}-$(TZ="${TIMEZONE}"" date +%Y%m%d%H%M)" >> .env
+    - echo "VITE_APP_VERSION=${CI_COMMIT_SHORT_SHA}-$(TZ="${TIMEZONE}" date +%Y%m%d%H%M)" >> .env
     - echo "TIMEZONE=${TIMEZONE}" >> .env
     - docker build -t routeui-image .
 
@@ -24,7 +24,7 @@ build-job-main:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - echo "VITE_ROUTEAPI_URL=$ROUTEAPI_URL" >> .env
-    - echo "VITE_APP_VERSION=${CI_COMMIT_SHORT_SHA}-$(TZ="${TIMEZONE}"" date +%Y%m%d%H%M)" >> .env
+    - echo "VITE_APP_VERSION=${CI_COMMIT_SHORT_SHA}-$(TZ="${TIMEZONE}" date +%Y%m%d%H%M)" >> .env
     - echo "TIMEZONE=${TIMEZONE}" >> .env
     - docker build -t routeui-image .
 
