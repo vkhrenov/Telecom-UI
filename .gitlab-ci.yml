@@ -1,0 +1,67 @@
+# routeUI dev/main branches
+stages:
+  - build
+  - test
+  - deploy
+
+build-job-dev:
+  stage: build
+  tags:
+    - dev
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+  script:
+    - echo "VITE_ROUTEAPI_URL=$ROUTEAPI_URL_DEV" >> .env
+    - echo "VITE_APP_VERSION=${CI_COMMIT_SHORT_SHA}-$(TZ="${TIMEZONE}"" date +%Y%m%d%H%M)" >> .env
+    - echo "TIMEZONE=${TIMEZONE}" >> .env
+    - docker build -t routeui-image .
+
+build-job-main:
+  stage: build
+  tags:
+    - main
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - echo "VITE_ROUTEAPI_URL=$ROUTEAPI_URL" >> .env
+    - echo "VITE_APP_VERSION=${CI_COMMIT_SHORT_SHA}-$(TZ="${TIMEZONE}"" date +%Y%m%d%H%M)" >> .env
+    - echo "TIMEZONE=${TIMEZONE}" >> .env
+    - docker build -t routeui-image .
+
+test-job-dev:
+  stage: test
+  tags:
+    - dev
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+  script:
+    - docker run --rm routeui-image nginx -t
+
+test-job-main:
+  stage: test
+  tags:
+    - main
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - docker run --rm routeui-image nginx -t
+
+deploy-job-dev:
+  stage: deploy
+  tags:
+    - dev
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+  script:
+    - echo "Deploying routeUI application (dev)..."
+    - docker compose up -d
+
+deploy-job-main:
+  stage: deploy
+  tags:
+    - main
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - echo "Deploying routeUI application (main)..."
+    - docker compose up -d

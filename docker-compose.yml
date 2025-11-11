@@ -1,0 +1,29 @@
+services:
+  routeui:
+    image: routeui-image:latest
+    container_name: routeui
+    build:
+      context: .frontend
+    networks:
+      routeuinet:
+        ipv4_address: 172.18.0.2
+    ports:
+      - "5173:80"
+
+    restart: on-failure
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - ./:/frontend:/app
+      - node_modules:/frontend/node_modules
+
+volumes:
+  node_modules:
+
+networks:
+  routeuinet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16

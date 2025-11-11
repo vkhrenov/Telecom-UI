@@ -1,0 +1,33 @@
+import { SxProps, Typography } from "@mui/material";
+import { memo } from "react";
+
+import { FieldProps, useRecordContext } from "react-admin";
+import { Statement } from "../types";
+
+interface Props extends FieldProps<Statement> {
+  size?: string;
+  sx?: SxProps;
+}
+
+// Component for rendering the full name field of a statement
+const FullNameField = (props: Props) => {
+  const record = useRecordContext<Statement>();
+  return record ? (
+    <Typography
+      variant="body2"
+      component="div"
+      sx={[
+        {
+          display: "flex",
+          flexWrap: "nowrap",
+          alignItems: "center",
+        },
+        ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
+      ]}
+    >
+      {record.name}
+    </Typography>
+  ) : null;
+};
+
+export default memo<Props>(FullNameField);
