@@ -44,9 +44,8 @@ The app reads these environment variables at build/runtime:
 Create a `.env` file at the project root or export variables in your CI pipeline:
 
 ```
-VITE_JSON_SERVER_URL=https://jsonplaceholder.typicode.com
 VITE_ROUTEAPI_URL=http://localhost:8180
-VITE_APP_VERSION=20251110-1
+VITE_APP_VERSION=dev-local
 ```
 
 ## Version badge
@@ -64,10 +63,11 @@ The UI can display both the frontend build version (VITE_APP_VERSION) and a runt
 - Dev server unreachable: ensure Vite binds to `0.0.0.0` (start with `npm run dev -- --host` or set `--host 0.0.0.0`).
 - CORS / mixed content issues: prefer proxying API via the same origin (nginx) or serve API over HTTPS if the UI is served via HTTPS.
 
-## Contributing / CI
+## CI/CD
 
-- Keep `VITE_APP_VERSION` consistent between frontend and backend builds if you need aligned version reporting.
-- Add tests and CI jobs that build the image and run a simple smoke test against `/` or `/index.html`.
+-  The .gitlab-ci.yml file defines separate jobs for dev and main branches, using different runners and environment variables.
+    Secrets and sensitive variables should be stored in GitLab CI/CD variables, not in the repository.
+
 
 ## License
 
